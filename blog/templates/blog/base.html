@@ -1,0 +1,102 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.4.1/dist/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+    <link rel="stylesheet" href="{% static 'blog/main.css' %}">
+
+    {% if title %}
+        <title> Post It!! - {{title}} </title>
+    {% else %}
+        <title> Post It!! </title>
+    {% endif %}
+</head>
+<body>
+    <!-- nav-bar -->
+    <header class="site-header">
+        <nav class="navbar navbar-expand-md navbar-dark bg-steel fixed-top">
+          <div class="container">
+            <a class="navbar-brand mr-4" href="{% url 'blog-home' %}">Post It !!</a>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarToggle" aria-controls="navbarToggle" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarToggle">
+              <div class="navbar-nav mr-auto">
+                <a class="nav-item nav-link" href="{% url 'blog-home' %}">Home</a>
+                <a class="nav-item nav-link" href="{% url 'blog-about' %}">About</a>
+              </div>
+              <!-- Navbar Right Side -->
+              <div class="navbar-nav">
+                {% if user.is_authenticated %}
+                <li class="nav-item dropdown">
+                  <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    {{ user.username }}
+                  </a>
+                  <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+                    <a class="dropdown-item" href="{% url 'profile' %}">Profile</a>
+                    <a class="dropdown-item" href="{% url 'user-posts' user.username %}">My Posts</a>
+                    <a class="dropdown-item" href="{% url 'logout' %}">Logout</a>
+                  </div>
+                </li>
+                {% else %}
+                <a class="nav-item nav-link" href="{% url 'login' %}">Login</a>
+                <a class="nav-item nav-link" href="{% url 'register' %}">Register</a>
+                {% endif %}
+              </div>
+            </div>
+          </div>
+        </nav>
+      </header>
+    
+    <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.4.1/dist/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
+
+    <main role="main" class="container">
+        <div class="row">
+          <div class="col-md-8">
+            {% if messages %}
+              {% for message in messages %}
+                <div class="alert alert-{{ message.tags }}">
+                  {{ message }}
+                </div>
+              {% endfor %}
+              {% endif %}
+            {% block content %}{% endblock %}
+          </div>
+          <div class="col-md-4">
+            <div class="content-section">
+              <!-- <h3>Menu</h3> -->
+              {% if user.is_authenticated %}
+                <center><img class="rounded-circle account-img" src="{{ user.profile.image.url }}"> </center>
+                <center><p class='text-muted'>Welcome Back <a href="{% url 'profile' %}">{{ user.username }} </a> !!</center>
+                <ul class="list-group">
+                  <li class="list-group-item list-group-item-light">
+                    <center><a href="{% url 'post-create' %}" >+ Add Post</a></center>
+                  </li>
+                  <li class="list-group-item list-group-item-light">
+                    <center><a href="{% url 'user-posts' user.username %}" >My Posts</a></center>
+                  </li>
+                  <!-- <li class="list-group-item list-group-item-light">Latest Posts</li>
+                  <li class="list-group-item list-group-item-light">Announcements</li>
+                  <li class="list-group-item list-group-item-light">Calendars</li>
+                  <li class="list-group-item list-group-item-light">People</li> -->
+                </ul>
+              </p>
+              {% else %}
+              <h4 style = "color: #341f6f;"> &nbspPost It !! Features</h4>
+              <hr>
+                <p>Currently you are not logged in, You must have to login to access features of the Post It!! Platform...</p>
+              </p>
+              {% endif %}
+            </div>
+          </div>
+        </div>
+      </main>
+
+</body>
+</html>
