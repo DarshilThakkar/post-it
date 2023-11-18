@@ -23,7 +23,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = 'django-insecure-$m!4hl47kqy69v)g$flt(05i3jy$i+a520rh4(y-mvbx9v5$-3'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False
+DEBUG = True
 
 ALLOWED_HOSTS = []
 
@@ -79,15 +79,10 @@ WSGI_APPLICATION = 'MySite.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'railway',
-        'USER': 'postgres',
-        'PASSWORD': 'g2FdGgbgDcggb3CeGAC36BB523f24*b4',
-        'HOST': 'roundhouse.proxy.rlwy.net',
-        'PORT': '21720',
+        'ENGINE': 'django.db.backends.sqlite3',
+        'NAME': BASE_DIR / 'db.sqlite3',
     }
 }
-
 
 
 # Password validation
@@ -126,6 +121,8 @@ USE_TZ = True
 STATIC_URL = 'static/'
 STATICFILES_DIRS = os.path.join(BASE_DIR,'static'),
 STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles_build', 'static')
+
+
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.2/ref/settings/#default-auto-field
 
@@ -146,3 +143,6 @@ EMAIL_USE_TLS = True
 EMAIL_HOST_USER = 'darshilthakkar001@gmail.com'
 EMAIL_HOST_PASSWORD = 'kopw hgsy qjws cvvl'
 DEFAULT_FROM_EMAIL = EMAIL_HOST_USER
+
+
+
